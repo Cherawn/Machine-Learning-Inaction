@@ -37,4 +37,30 @@ def grad_ascent(data_mat_in, label_arr_in):
 if __name__ == '__main__':
     data_matrix, label_array = load_data_set()
     wei = grad_ascent(data_matrix, label_array)
-    print(wei)
+    
+    
+   
+def plot_best_fit(weights_in):
+    # 载入数据
+    weights = weights_in.getA()
+    data_mat, label_arr = load_data_set()
+    data_arr = np.array(data_mat)
+    n = np.shape(data_arr)[0]
+    x_cord1 = []
+    y_cord1 = []
+    x_cord2 = []
+    y_cord2 = []
+    for i in range(n):
+        if int(label_arr[i] == 1):
+            x_cord1.append(data_arr[i, 1])
+            y_cord1.append(data_arr[i, 2])
+        else:
+            x_cord2.append(data_arr[i, 1])
+            y_cord2.append(data_arr[i, 2])
+    # 绘制决策边界
+    fig = plt.figure()
+    ax = fig.add_subplot(111)
+    ax.scatter(x_cord1, y_cord1, s=30, c='red', marker='s')
+    ax.scatter(x_cord2, y_cord2, s=30, c='green')
+    x = np.arange(-3.0, 3.0, 0.1)
+    y = (-)
