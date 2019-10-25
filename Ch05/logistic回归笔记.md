@@ -151,7 +151,6 @@ w_{k+1}=w_k-\alpha \sum_{i=1}^{l}(h_w(x_i)-y_i)x_i
 $$
 
 >### 梯度上升法与梯度下降法区别
->
 >梯度上升法求取函数的最大值，而梯度下降法求取函数的最小值。
 >但两种方法可以转化：$max_w\ \ f(w)=min_w\ \ (-f(w))$
 >因此根据梯度下降法公式：$w_{k+1}=w_k-\alpha\bigtriangledown f(w)$，因为$\bigtriangledown -f(w)=-\bigtriangledown f(w)$，所以梯度上升法公式为：$w_{k+1}=w_k+\alpha\bigtriangledown f(w)$。
