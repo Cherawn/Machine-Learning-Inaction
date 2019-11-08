@@ -33,6 +33,7 @@ def buildStump(dataArr, classLabels, D):
         rangeMax = dataMatrix[:, i].max()
         stepSize = (rangeMax - rangeMin) / numSteps
         for j in range(-1, int(numSteps)+1):
+            # 包含'lt', 'gt'是因为，不确定'-1'是与'lt', 'gt'哪个对应
             for inequal in ['lt', 'gt']:
                 threshVal = (rangeMin + float(j) * stepSize)
                 predicteVals = stumpClassify(dataMatrix, i, threshVal, inequal)
