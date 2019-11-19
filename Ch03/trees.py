@@ -86,9 +86,24 @@ def createTree(dataSet, labels):
     return myTree
 
 
+def classify(inputTree, featLabels, testVec):
+    firstStr = list(inputTree.keys())[0]
+    secondDict = inputTree[firstStr]
+    featIndex = featLabels.index(firstStr)
+    for key in secondDict.keys():
+        if testVec[featIndex] == key:
+            if type(secondDict[key]).__name__ == 'dict':
+                classLabel = classify(secondDict[key],featLabels,testVec)
+            else:
+                classLabel = secondDict[key]
+    return classLabel
+
+
 if __name__ == '__main__':
     myData, labels = creatDataSet()
     # retDataSet = splitDataSet(myData, 0, 1)
     # shannonEnt = calcShannonEnt(myData)
     # feature = chooseBestFeatureToSplit(myData)
-    myTree = createTree(myData, labels)
+    myTree = createTree(myData, labels.copy())
+    myData, labels = creatDataSet()
+    classL = classify(myTree, labels, [1, 0])
