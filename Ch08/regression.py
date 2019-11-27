@@ -95,7 +95,7 @@ if __name__ == '__main__':
     yHat = lwlrTest(xArr, xArr, yArr, 0.01)
     xMat = np.mat(xArr)
     yMat = np.mat(yArr)
-    sortInd = xMat[:,1].argsort(0)
+    sortInd = xMat[:,1].argsort(0)  # .argsort(0)返回升序排列索引
     xSort = xMat[sortInd][:, 0, :]  # xMat[sortInd]有3个维度，形式为[[[]],[[]]]
     fig = plt.figure()
     ax = fig.add_subplot(111)
