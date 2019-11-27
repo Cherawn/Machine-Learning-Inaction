@@ -2,7 +2,7 @@
 《machine learning inaction》各章节代码Python3重写、整理
 # 已更新内容
 * Ch02 k-邻近算法
-* Ch03 决策树（部分）
+* Ch03 决策树
 * Ch04 基于概率论的分类方法：朴素贝叶斯
 * Ch05 Logistic回归
 * Ch06 支持向量机
