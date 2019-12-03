@@ -78,7 +78,35 @@ def lwlrTest(testArr, xArr, yArr, k = 1.0):
     return yHat
 
 
+
+def ridgeRegres(xMat, yMat, lam=0.2):
+    xTx = xMat.T * xMat
+    denom = xTx + np.eye(np.shape(xMat)[1]) * lam
+    if np.linalg.det(denom) == 0.0:
+        print("Thin matrix is singular, cannot do inverse")
+        return
+    ws = denom.I * (xMat.T * yMat)
+    return ws
+
+
+def ridgeTest(xArr, yArr):
+    xMat = np.mat(xArr)
+    yMat = np.mat(yArr).T
+    yMean = np.mean(yMat, 0)
+    yMat = yMat - yMean
+    xMeans = np.mean(xMat, 0)
+    xVar = np.var(xMat, 0)
+    xMat = (xMat - xMeans) / xVar
+    numTeatPts = 30
+    wMat = np.zeros((numTeatPts, np.shape(xMat)[1]))
+    for i in range(numTeatPts):
+        ws = ridgeRegres(xMat, yMat, np.exp(i - 10))
+        wMat[i, :] = ws.T
+    return wMat
+
+
 if __name__ == '__main__':
+    # # 线性回归主函数
     # ws = standRegres(xArr, yArr)
     # xMat = np.mat(xArr)
     # yMat = np.mat(yArr)
@@ -91,14 +119,24 @@ if __name__ == '__main__':
     # ax.plot(xCopy[:, 1], yHat)
     # plt.show()
     # co = np.corrcoef(yHat.T, yMat)
-    xArr, yArr = loadDataSet('ex0.txt')
-    yHat = lwlrTest(xArr, xArr, yArr, 0.01)
-    xMat = np.mat(xArr)
-    yMat = np.mat(yArr)
-    sortInd = xMat[:,1].argsort(0)  # .argsort(0)返回升序排列索引
-    xSort = xMat[sortInd][:, 0, :]  # xMat[sortInd]有3个维度，形式为[[[]],[[]]]
+    # 局部加权线性回归主函数
+    # xArr, yArr = loadDataSet('ex0.txt')
+    # yHat = lwlrTest(xArr, xArr, yArr, 0.01)
+    # xMat = np.mat(xArr)
+    # yMat = np.mat(yArr)
+    # sortInd = xMat[:, 1].argsort(0)  # .argsort(0)返回升序排列索引
+    # xSort = xMat[sortInd][:, 0, :]  # xMat[sortInd]有3个维度，形式为[[[]],[[]]]
+    # fig = plt.figure()
+    # ax = fig.add_subplot(111)
+    # ax.scatter(xMat[:, 1].flatten().A[0], yMat.T[:, 0].flatten().A[0], s=2, c='red')
+    # ax.plot(xSort[:, 1], yHat[sortInd])
+    # plt.show()
+    # 岭回归主函数
+    abX, abY = loadDataSet('abalone.txt')
+    a = np.array(abX)
+    b = np.array(abY).T
+    ridgeWeights = ridgeTest(abX, abY)
     fig = plt.figure()
     ax = fig.add_subplot(111)
-    ax.scatter(xMat[:, 1].flatten().A[0], yMat.T[:, 0].flatten().A[0], s=2, c='red')
-    ax.plot(xSort[:, 1], yHat[sortInd])
+    ax.plot(ridgeWeights)
     plt.show()
